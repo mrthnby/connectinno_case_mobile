@@ -1,0 +1,60 @@
+name: connectinno_case_mobile
+description: "Connectinno Case Mobile App"
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  # Flutter core
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # Localization
+  easy_localization: ^3.0.8
+
+  # Routing
+  go_router: ^16.2.1
+
+  # State management
+  flutter_bloc: ^9.1.1
+
+  # Dependency injection
+  injectable: ^2.5.1
+  get_it: ^8.2.0
+
+  # Code generation
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+
+  # Logging
+  logger: ^2.6.1
+
+dev_dependencies:
+  # Flutter test
+  flutter_test:
+    sdk: flutter
+
+  # Code Analysis
+  very_good_analysis: ^9.0.0
+
+  # Code generation
+  build_runner: ^2.7.0
+  freezed: ^3.2.0
+  injectable_generator: ^2.8.1
+
+  # Routing Code generation
+  go_router_builder: ^4.0.1
+
+  # JSON serialization
+  json_serializable: ^6.11.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/translations/
