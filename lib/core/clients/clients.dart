@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
@@ -10,6 +11,10 @@ import 'package:logger/logger.dart';
 ///
 @module
 abstract class Clients {
+  /// Provides a lazily instantiated singleton of [FirebaseAuth].
+  @lazySingleton
+  FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
+
   /// Provides a lazily instantiated singleton of [Logger].
   ///
   /// The logger's printer and level are configured based on the build mode:

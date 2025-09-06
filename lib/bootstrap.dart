@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:connectinno_case_mobile/core/clients/logger/logger_service.dart';
 import 'package:connectinno_case_mobile/core/di/injection.dart';
+import 'package:connectinno_case_mobile/firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 /// Bootstraps the Flutter application inside a [runZonedGuarded] zone.
@@ -29,6 +31,11 @@ Future<void> bootstrap(Widget app) async {
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+
+      // Initialize Firebase
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
 
       // Initialize Easy Localization
       await EasyLocalization.ensureInitialized();
