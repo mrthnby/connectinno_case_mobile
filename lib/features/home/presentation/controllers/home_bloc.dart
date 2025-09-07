@@ -2,8 +2,8 @@ import 'package:connectinno_case_mobile/core/clients/logger/logger_service.dart'
 import 'package:connectinno_case_mobile/core/di/injection.dart';
 import 'package:connectinno_case_mobile/features/home/domain/entities/note_entity.dart';
 import 'package:connectinno_case_mobile/features/home/domain/usecases/create_note_usecase.dart';
-import 'package:connectinno_case_mobile/features/home/domain/usecases/get_notes_usecase.dart';
 import 'package:connectinno_case_mobile/features/home/domain/usecases/delete_note_usecase.dart';
+import 'package:connectinno_case_mobile/features/home/domain/usecases/get_notes_usecase.dart';
 import 'package:connectinno_case_mobile/features/home/domain/usecases/update_note_usecase.dart';
 import 'package:connectinno_case_mobile/features/home/presentation/controllers/home_event.dart';
 import 'package:connectinno_case_mobile/features/home/presentation/controllers/home_state.dart';

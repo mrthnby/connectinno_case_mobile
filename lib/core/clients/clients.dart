@@ -1,5 +1,8 @@
-import 'package:connectinno_case_mobile/core/clients/db/local_db_cleint_impl.dart';
+import 'package:connectinno_case_mobile/core/clients/db/local_db_client_impl.dart';
+import 'package:connectinno_case_mobile/core/constants/app_constants.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
@@ -16,6 +19,10 @@ abstract class Clients {
   @lazySingleton
   FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
 
+  /// Provides a lazily instantiated singleton of [FirebaseFirestore].
+  @lazySingleton
+  FirebaseFirestore get firestore => FirebaseFirestore.instance;
+
   /// Provides a lazily instantiated singleton of [Logger].
   ///
   /// The logger's printer and level are configured based on the build mode:
@@ -27,8 +34,23 @@ abstract class Clients {
     level: kDebugMode ? Level.debug : Level.info,
   );
 
+  /// Provides a singleton instance of [ObjectBox].
+  ///
+  /// - Creates the ObjectBox instance and returns it.
   @preResolve
   Future<ObjectBox> get objectBox => ObjectBox.create();
+
+  /// Provides a singleton instance of [Dio].
+  ///
+  /// - Configures the Dio instance with the base URL and timeouts.
+  @lazySingleton
+  Dio get dio => Dio(
+    BaseOptions(
+      baseUrl: AppConstants.apiBaseUrl,
+      connectTimeout: AppConstants.networkTimeout,
+      receiveTimeout: AppConstants.networkTimeout,
+    ),
+  );
 }
 
 /// Extension methods for [Clients] to provide additional functionality.

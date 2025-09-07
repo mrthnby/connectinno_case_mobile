@@ -25,6 +25,7 @@ class NotesGrid extends StatelessWidget {
           crossAxisCount: 2,
           mainAxisExtent: 160,
           crossAxisSpacing: AppDimens.s16,
+          mainAxisSpacing: AppDimens.s16,
         );
 
         return GridView.builder(

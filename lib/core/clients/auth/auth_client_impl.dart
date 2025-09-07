@@ -2,6 +2,7 @@ import 'package:connectinno_case_mobile/core/clients/auth/auth_client.dart';
 import 'package:connectinno_case_mobile/core/clients/logger/logger_service.dart';
 import 'package:connectinno_case_mobile/core/error/exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 
 /// Implementation of [AuthClient] using Firebase Authentication.
@@ -14,10 +15,20 @@ import 'package:injectable/injectable.dart';
 @LazySingleton(as: AuthClient)
 final class AuthClientImpl implements AuthClient {
   /// Creates an [AuthClientImpl] with the required Firebase and logger instances.
-  AuthClientImpl(this._firebaseAuth, this._logger);
+  AuthClientImpl(this._firebaseAuth, this._firestore, this._logger);
 
   final FirebaseAuth _firebaseAuth;
+  final FirebaseFirestore _firestore;
   final LoggerService _logger;
+
+  /// Returns the token of the currently logged-in user.
+  ///
+  /// Returns `null` if no user is logged in.
+  @override
+  Future<String?> getToken() async {
+    final user = _firebaseAuth.currentUser;
+    return user?.getIdToken();
+  }
 
   /// Returns the currently authenticated user's UID, or `null` if none exists.
   @override
@@ -126,7 +137,29 @@ final class AuthClientImpl implements AuthClient {
         throw AuthException(message: 'Registration failed');
       }
 
-      return credential.user!.uid;
+      final uid = credential.user!.uid;
+
+      // Create/merge Firestore user profile document
+      try {
+        await _firestore.collection('users').doc(uid).set(
+          {
+            'username': name,
+            'uid': uid,
+            'email': email,
+          },
+          SetOptions(merge: true),
+        );
+      } catch (error, stackTrace) {
+        _logger.warning(
+          'Failed to create user document in Firestore during registration',
+          error: error,
+          stackTrace: stackTrace,
+          data: {'uid': uid, 'email': email},
+        );
+        // Intentionally not throwing to avoid breaking registration if profile write fails.
+      }
+
+      return uid;
     } on FirebaseAuthException catch (error, stackTrace) {
       _logger.warning(
         'Registration failed',

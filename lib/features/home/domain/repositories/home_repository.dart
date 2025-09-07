@@ -30,4 +30,6 @@ abstract class HomeRepository {
   /// Returns an [Either] containing a [Failure] on error,
   /// or a list of [NoteEntity] on success.
   Future<Either<Failure, List<NoteEntity>>> getNotes();
+
+  Future<Either<Failure, void>> syncNotes();  
 }

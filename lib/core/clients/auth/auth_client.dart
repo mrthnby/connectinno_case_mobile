@@ -6,6 +6,12 @@
 /// from third-party authentication providers** and allow easy swapping
 /// of implementations in the future.
 abstract class AuthClient {
+
+  /// Returns the token of the currently logged-in user.
+  ///
+  /// Returns `null` if no user is logged in.
+  Future<String?> getToken();
+
   /// Returns the currently logged-in user's unique identifier (uid).
   ///
   /// Returns `null` if no user is logged in.

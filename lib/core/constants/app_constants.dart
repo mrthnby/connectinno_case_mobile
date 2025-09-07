@@ -15,6 +15,12 @@ abstract class AppConstants {
   /// `value` : Connectinno Case
   static const String appName = 'Connectinno Case';
 
+  /// The base url of the api.
+  static const String apiBaseUrl = 'http://localhost:8000';
+
+  /// The timeout of the network requests.
+  static const Duration networkTimeout = Duration(seconds: 10);
+
   /// Regular expression pattern for email validation.
   /// Validates standard email format with alphanumeric characters,
   /// common special characters, and proper domain structure.
