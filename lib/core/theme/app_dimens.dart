@@ -15,6 +15,8 @@ final class AppDimens {
 
   static const double s4 = 4;
   static const double s8 = 8;
+  static const double s12 = 12;
+  static const double s14 = 14;
   static const double s16 = 16;
   static const double s18 = 18;
   static const double s20 = 20;
@@ -29,6 +31,7 @@ final class AppDimens {
 
   static const SizedBox h4 = SizedBox(height: s4);
   static const SizedBox h8 = SizedBox(height: s8);
+  static const SizedBox h12 = SizedBox(height: s12);
   static const SizedBox h16 = SizedBox(height: s16);
   static const SizedBox h24 = SizedBox(height: s24);
   static const SizedBox h32 = SizedBox(height: s32);

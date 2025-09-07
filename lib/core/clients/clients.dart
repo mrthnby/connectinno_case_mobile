@@ -1,3 +1,4 @@
+import 'package:connectinno_case_mobile/core/clients/db/local_db_cleint_impl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
@@ -25,6 +26,9 @@ abstract class Clients {
     printer: getPrinter,
     level: kDebugMode ? Level.debug : Level.info,
   );
+
+  @preResolve
+  Future<ObjectBox> get objectBox => ObjectBox.create();
 }
 
 /// Extension methods for [Clients] to provide additional functionality.

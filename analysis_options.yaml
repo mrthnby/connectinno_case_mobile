@@ -7,6 +7,7 @@ analyzer:
     one_member_abstracts: ignore
     flutter_style_todos: ignore
     document_ignores: ignore
+    invalid_annotation_target: ignore
   exclude:
     - "**/*.g.dart"
 

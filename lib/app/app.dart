@@ -3,6 +3,7 @@ import 'package:connectinno_case_mobile/core/router/app_router.dart';
 import 'package:connectinno_case_mobile/core/theme/app_theme.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 
 /// The root widget of the application.
 ///
@@ -24,7 +25,10 @@ class App extends StatelessWidget {
       theme: AppTheme.light,
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: context.localizationDelegates,
+      localizationsDelegates: [
+        ...context.localizationDelegates,
+        FlutterQuillLocalizations.delegate,
+      ],
       supportedLocales: context.supportedLocales,
       locale: context.locale,
     );

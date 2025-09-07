@@ -9,7 +9,7 @@ part of 'routes.dart';
 List<RouteBase> get $appRoutes => [
   $splashPageRoute,
   $authShellRoute,
-  $homePageRoute,
+  $homeShellRoute,
 ];
 
 RouteBase get $splashPageRoute => GoRouteData.$route(
@@ -125,17 +125,52 @@ mixin $ForgotPasswordPageRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $homePageRoute => GoRouteData.$route(
-  path: '/home',
-  name: 'home',
-  factory: $HomePageRoute._fromState,
+RouteBase get $homeShellRoute => ShellRouteData.$route(
+  factory: $HomeShellRouteExtension._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: '/home',
+      name: 'home',
+      factory: $HomePageRoute._fromState,
+    ),
+    GoRouteData.$route(
+      path: '/note-editor',
+      name: 'note-editor',
+      factory: $NoteEditorPageRoute._fromState,
+    ),
+  ],
 );
+
+extension $HomeShellRouteExtension on HomeShellRoute {
+  static HomeShellRoute _fromState(GoRouterState state) => HomeShellRoute();
+}
 
 mixin $HomePageRoute on GoRouteData {
   static HomePageRoute _fromState(GoRouterState state) => HomePageRoute();
 
   @override
   String get location => GoRouteData.$location('/home');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $NoteEditorPageRoute on GoRouteData {
+  static NoteEditorPageRoute _fromState(GoRouterState state) =>
+      NoteEditorPageRoute();
+
+  @override
+  String get location => GoRouteData.$location('/note-editor');
 
   @override
   void go(BuildContext context) => context.go(location);

@@ -11,3 +11,17 @@ final class AuthException implements Exception {
     return message;
   }
 }
+
+/// Custom exception for local database-related errors.
+final class LocalDatabaseException implements Exception {
+  /// Creates a [LocalDatabaseException] with a descriptive error [message].
+  LocalDatabaseException({required this.message});
+
+  /// The error message describing what went wrong with the local database operation.
+  final String message;
+
+  @override
+  String toString() {
+    return message;
+  }
+}

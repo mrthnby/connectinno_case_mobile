@@ -14,6 +14,10 @@ import 'package:connectinno_case_mobile/core/clients/auth/auth_client.dart'
 import 'package:connectinno_case_mobile/core/clients/auth/auth_client_impl.dart'
     as _i178;
 import 'package:connectinno_case_mobile/core/clients/clients.dart' as _i533;
+import 'package:connectinno_case_mobile/core/clients/db/local_db_cleint_impl.dart'
+    as _i161;
+import 'package:connectinno_case_mobile/core/clients/db/local_db_client.dart'
+    as _i135;
 import 'package:connectinno_case_mobile/core/clients/logger/logger_service.dart'
     as _i794;
 import 'package:connectinno_case_mobile/core/clients/logger/logger_service_impl.dart'
@@ -32,6 +36,22 @@ import 'package:connectinno_case_mobile/features/auth/domain/usecases/reset_pass
     as _i143;
 import 'package:connectinno_case_mobile/features/auth/presentation/controllers/auth_bloc.dart'
     as _i203;
+import 'package:connectinno_case_mobile/features/home/data/datasources/home_local_datasource.dart'
+    as _i396;
+import 'package:connectinno_case_mobile/features/home/data/repositories/home_repository_impl.dart'
+    as _i614;
+import 'package:connectinno_case_mobile/features/home/domain/repositories/home_repository.dart'
+    as _i163;
+import 'package:connectinno_case_mobile/features/home/domain/usecases/create_note_usecase.dart'
+    as _i765;
+import 'package:connectinno_case_mobile/features/home/domain/usecases/delete_note_usecase.dart'
+    as _i40;
+import 'package:connectinno_case_mobile/features/home/domain/usecases/get_notes_usecase.dart'
+    as _i272;
+import 'package:connectinno_case_mobile/features/home/domain/usecases/update_note_usecase.dart'
+    as _i1047;
+import 'package:connectinno_case_mobile/features/home/presentation/controllers/home_bloc.dart'
+    as _i189;
 import 'package:connectinno_case_mobile/features/splash/data/datasources/splash_remote_datasource.dart'
     as _i951;
 import 'package:connectinno_case_mobile/features/splash/data/repositories/splash_repository_impl.dart'
@@ -49,12 +69,16 @@ import 'package:logger/logger.dart' as _i974;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final clients = _$Clients();
+    await gh.factoryAsync<_i161.ObjectBox>(
+      () => clients.objectBox,
+      preResolve: true,
+    );
     gh.lazySingleton<_i59.FirebaseAuth>(() => clients.firebaseAuth);
     gh.lazySingleton<_i974.Logger>(() => clients.logger);
     gh.lazySingleton<_i794.LoggerService>(
@@ -66,14 +90,43 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i794.LoggerService>(),
       ),
     );
+    gh.singleton<_i135.LocalDatabaseClient>(
+      () => _i161.LocalDatabaseClientImpl(gh<_i161.ObjectBox>()),
+    );
+    gh.lazySingleton<_i396.HomeLocalDatasource>(
+      () => _i396.HomeLocalDatasourceImpl(gh<_i135.LocalDatabaseClient>()),
+    );
     gh.lazySingleton<_i951.SplashRemoteDatasource>(
       () => _i951.SplashRemoteDatasourceImpl(gh<_i213.AuthClient>()),
     );
     gh.lazySingleton<_i912.AuthRemoteDatasource>(
       () => _i912.AuthRemoteDatasourceImpl(gh<_i213.AuthClient>()),
     );
+    gh.lazySingleton<_i163.HomeRepository>(
+      () => _i614.HomeRepositoryImpl(gh<_i396.HomeLocalDatasource>()),
+    );
+    gh.factory<_i765.CreateNoteUsecase>(
+      () => _i765.CreateNoteUsecase(gh<_i163.HomeRepository>()),
+    );
+    gh.factory<_i272.GetNotesUsecase>(
+      () => _i272.GetNotesUsecase(gh<_i163.HomeRepository>()),
+    );
+    gh.factory<_i1047.UpdateNoteUsecase>(
+      () => _i1047.UpdateNoteUsecase(gh<_i163.HomeRepository>()),
+    );
+    gh.factory<_i40.DeleteNoteUsecase>(
+      () => _i40.DeleteNoteUsecase(gh<_i163.HomeRepository>()),
+    );
     gh.lazySingleton<_i134.SplashRepository>(
       () => _i805.SplashRepositoryImpl(gh<_i951.SplashRemoteDatasource>()),
+    );
+    gh.factory<_i189.HomeBloc>(
+      () => _i189.HomeBloc(
+        gh<_i272.GetNotesUsecase>(),
+        gh<_i765.CreateNoteUsecase>(),
+        gh<_i1047.UpdateNoteUsecase>(),
+        gh<_i40.DeleteNoteUsecase>(),
+      ),
     );
     gh.lazySingleton<_i223.AuthRepository>(
       () => _i664.AuthRepositoryImpl(gh<_i912.AuthRemoteDatasource>()),
