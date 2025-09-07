@@ -55,14 +55,13 @@ extension SplashStatePatterns on SplashState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SplashInitialState value)?  initial,TResult Function( SplashUserIDFoundState value)?  userIDFound,TResult Function( SplashUserIDNotFoundState value)?  userIDNotFound,TResult Function( SplashErrorState value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SplashInitialState value)?  initial,TResult Function( SplashUserIDFoundState value)?  userIDFound,TResult Function( SplashUserIDNotFoundState value)?  userIDNotFound,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case SplashInitialState() when initial != null:
 return initial(_that);case SplashUserIDFoundState() when userIDFound != null:
 return userIDFound(_that);case SplashUserIDNotFoundState() when userIDNotFound != null:
-return userIDNotFound(_that);case SplashErrorState() when error != null:
-return error(_that);case _:
+return userIDNotFound(_that);case _:
   return orElse();
 
 }
@@ -80,14 +79,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SplashInitialState value)  initial,required TResult Function( SplashUserIDFoundState value)  userIDFound,required TResult Function( SplashUserIDNotFoundState value)  userIDNotFound,required TResult Function( SplashErrorState value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SplashInitialState value)  initial,required TResult Function( SplashUserIDFoundState value)  userIDFound,required TResult Function( SplashUserIDNotFoundState value)  userIDNotFound,}){
 final _that = this;
 switch (_that) {
 case SplashInitialState():
 return initial(_that);case SplashUserIDFoundState():
 return userIDFound(_that);case SplashUserIDNotFoundState():
-return userIDNotFound(_that);case SplashErrorState():
-return error(_that);}
+return userIDNotFound(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -101,14 +99,13 @@ return error(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SplashInitialState value)?  initial,TResult? Function( SplashUserIDFoundState value)?  userIDFound,TResult? Function( SplashUserIDNotFoundState value)?  userIDNotFound,TResult? Function( SplashErrorState value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SplashInitialState value)?  initial,TResult? Function( SplashUserIDFoundState value)?  userIDFound,TResult? Function( SplashUserIDNotFoundState value)?  userIDNotFound,}){
 final _that = this;
 switch (_that) {
 case SplashInitialState() when initial != null:
 return initial(_that);case SplashUserIDFoundState() when userIDFound != null:
 return userIDFound(_that);case SplashUserIDNotFoundState() when userIDNotFound != null:
-return userIDNotFound(_that);case SplashErrorState() when error != null:
-return error(_that);case _:
+return userIDNotFound(_that);case _:
   return null;
 
 }
@@ -125,13 +122,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( String userID)?  userIDFound,TResult Function()?  userIDNotFound,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( String userID)?  userIDFound,TResult Function()?  userIDNotFound,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case SplashInitialState() when initial != null:
 return initial();case SplashUserIDFoundState() when userIDFound != null:
 return userIDFound(_that.userID);case SplashUserIDNotFoundState() when userIDNotFound != null:
-return userIDNotFound();case SplashErrorState() when error != null:
-return error(_that.message);case _:
+return userIDNotFound();case _:
   return orElse();
 
 }
@@ -149,13 +145,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( String userID)  userIDFound,required TResult Function()  userIDNotFound,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( String userID)  userIDFound,required TResult Function()  userIDNotFound,}) {final _that = this;
 switch (_that) {
 case SplashInitialState():
 return initial();case SplashUserIDFoundState():
 return userIDFound(_that.userID);case SplashUserIDNotFoundState():
-return userIDNotFound();case SplashErrorState():
-return error(_that.message);}
+return userIDNotFound();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -169,13 +164,12 @@ return error(_that.message);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( String userID)?  userIDFound,TResult? Function()?  userIDNotFound,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( String userID)?  userIDFound,TResult? Function()?  userIDNotFound,}) {final _that = this;
 switch (_that) {
 case SplashInitialState() when initial != null:
 return initial();case SplashUserIDFoundState() when userIDFound != null:
 return userIDFound(_that.userID);case SplashUserIDNotFoundState() when userIDNotFound != null:
-return userIDNotFound();case SplashErrorState() when error != null:
-return error(_that.message);case _:
+return userIDNotFound();case _:
   return null;
 
 }
@@ -312,71 +306,5 @@ String toString() {
 
 
 
-
-/// @nodoc
-
-
-class SplashErrorState implements SplashState {
-  const SplashErrorState({required this.message});
-  
-
- final  String message;
-
-/// Create a copy of SplashState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$SplashErrorStateCopyWith<SplashErrorState> get copyWith => _$SplashErrorStateCopyWithImpl<SplashErrorState>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashErrorState&&(identical(other.message, message) || other.message == message));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,message);
-
-@override
-String toString() {
-  return 'SplashState.error(message: $message)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $SplashErrorStateCopyWith<$Res> implements $SplashStateCopyWith<$Res> {
-  factory $SplashErrorStateCopyWith(SplashErrorState value, $Res Function(SplashErrorState) _then) = _$SplashErrorStateCopyWithImpl;
-@useResult
-$Res call({
- String message
-});
-
-
-
-
-}
-/// @nodoc
-class _$SplashErrorStateCopyWithImpl<$Res>
-    implements $SplashErrorStateCopyWith<$Res> {
-  _$SplashErrorStateCopyWithImpl(this._self, this._then);
-
-  final SplashErrorState _self;
-  final $Res Function(SplashErrorState) _then;
-
-/// Create a copy of SplashState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
-  return _then(SplashErrorState(
-message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
 
 // dart format on

@@ -1,1 +1,27 @@
-{}
+{
+    "welcomeBack": "Welcome Back 👋",
+    "loginToYourAccount": "Login to your account",
+    "forgotPassword": "Forgot Password?",
+    "dontHaveAnAccount": "Don't have an account?",
+    "createAccount": "Create Account",
+    "signUpToGetStarted": "Sign up to get started",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "signUp": "Sign Up",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "login": "Login",
+    "ifThisEmailIsRegisteredYouWillReceiveAResetLink": "If this email is registered, you will receive a reset link.",
+    "forgotPasswordTitle": "Forgot Password? 🔒",
+    "enterYourEmailToResetYourPassword": "Enter your email to reset your password",
+    "sendResetLink": "Send Reset Link",
+    "emailCannotBeEmpty": "Email cannot be empty",
+    "pleaseEnterAValidEmailAddress": "Please enter a valid email address (e.g., name@domain.com)",
+    "emailFieldCannotBeEmpty": "Email field cannot be empty",
+    "passwordCannotBeEmpty": "Password cannot be empty",
+    "passwordMustBeAtLeast6CharactersLong": "Password must be at least 6 characters long",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "nameFieldCannotBeEmpty": "Name field cannot be empty",
+    "nameCanOnlyContainLettersSpacesHyphensApostrophesAndMustBeAtLeast2CharactersLong": "Name can only contain letters, spaces, hyphens (-), and apostrophes (') and must be at least 2 characters long"
+}

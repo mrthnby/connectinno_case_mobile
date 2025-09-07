@@ -19,9 +19,4 @@ sealed class SplashState with _$SplashState {
   ///
   /// This state triggers navigation to the Login page.
   const factory SplashState.userIDNotFound() = SplashUserIDNotFoundState;
-
-  /// Represents an error during splash logic.
-  ///
-  /// [message] contains a description of the error.
-  const factory SplashState.error({required String message}) = SplashErrorState;
 }

@@ -10,9 +10,20 @@
 /// print(AppConstants.appName); // Outputs: Connectinno Case
 /// ```
 abstract class AppConstants {
-
   /// The name of the application used throughout the app.
-  /// 
+  ///
   /// `value` : Connectinno Case
   static const String appName = 'Connectinno Case';
+
+  /// Regular expression pattern for email validation.
+  /// Validates standard email format with alphanumeric characters,
+  /// common special characters, and proper domain structure.
+  static const String emailRegexPattern =
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+
+  /// Regular expression pattern for name validation.
+  /// Allows letters (including international characters with accents),
+  /// spaces, hyphens, apostrophes, and requires minimum 2 characters.
+  static const String nameRegexPattern =
+      r"^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\u1E00-\u1EFF\s\-']{2,}$";
 }

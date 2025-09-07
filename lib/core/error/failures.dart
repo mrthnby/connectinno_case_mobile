@@ -11,6 +11,16 @@ abstract class Failure {
   final String message;
 }
 
+/// Represents a validation failure.
+///
+/// Specifically for invalid input data (e.g., empty fields,
+/// incorrect format, etc.). Contains a [message] describing the
+/// specific validation issue.
+final class ValidationFailure extends Failure {
+  /// Creates a [ValidationFailure] with the given [message].
+  const ValidationFailure({required super.message});
+}
+
 /// Represents an unknown or unexpected failure.
 ///
 /// Can be used as a fallback for errors that don't have a

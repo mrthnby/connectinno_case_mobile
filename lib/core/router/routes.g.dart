@@ -8,7 +8,7 @@ part of 'routes.dart';
 
 List<RouteBase> get $appRoutes => [
   $splashPageRoute,
-  $loginPageRoute,
+  $authShellRoute,
   $homePageRoute,
 ];
 
@@ -38,17 +38,78 @@ mixin $SplashPageRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $loginPageRoute => GoRouteData.$route(
-  path: '/login',
-  name: 'login',
-  factory: $LoginPageRoute._fromState,
+RouteBase get $authShellRoute => ShellRouteData.$route(
+  factory: $AuthShellRouteExtension._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: '/login',
+      name: 'login',
+      factory: $LoginPageRoute._fromState,
+    ),
+    GoRouteData.$route(
+      path: '/register',
+      name: 'register',
+      factory: $RegisterPageRoute._fromState,
+    ),
+    GoRouteData.$route(
+      path: '/forgot-password',
+      name: 'forgot-password',
+      factory: $ForgotPasswordPageRoute._fromState,
+    ),
+  ],
 );
+
+extension $AuthShellRouteExtension on AuthShellRoute {
+  static AuthShellRoute _fromState(GoRouterState state) => AuthShellRoute();
+}
 
 mixin $LoginPageRoute on GoRouteData {
   static LoginPageRoute _fromState(GoRouterState state) => LoginPageRoute();
 
   @override
   String get location => GoRouteData.$location('/login');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $RegisterPageRoute on GoRouteData {
+  static RegisterPageRoute _fromState(GoRouterState state) =>
+      RegisterPageRoute();
+
+  @override
+  String get location => GoRouteData.$location('/register');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $ForgotPasswordPageRoute on GoRouteData {
+  static ForgotPasswordPageRoute _fromState(GoRouterState state) =>
+      ForgotPasswordPageRoute();
+
+  @override
+  String get location => GoRouteData.$location('/forgot-password');
 
   @override
   void go(BuildContext context) => context.go(location);

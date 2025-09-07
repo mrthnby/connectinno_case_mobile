@@ -37,6 +37,7 @@ extension LoggerExtension on Clients {
     if (kDebugMode) {
       return PrettyPrinter(
         dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart,
+        colors: false,
       );
     }
     return SimplePrinter(colors: false, printTime: true);

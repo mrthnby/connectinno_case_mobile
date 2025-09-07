@@ -1,5 +1,6 @@
 import 'package:connectinno_case_mobile/core/clients/auth/auth_client.dart';
 import 'package:connectinno_case_mobile/core/clients/logger/logger_service.dart';
+import 'package:connectinno_case_mobile/core/error/exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
@@ -23,6 +24,10 @@ final class AuthClientImpl implements AuthClient {
   Future<String?> currentUserID() async {
     try {
       final user = _firebaseAuth.currentUser;
+      _logger.info(
+        'Current user id',
+        data: {'user_id': user?.uid},
+      );
       return user?.uid;
     } catch (error, stackTrace) {
       _logger.error(
@@ -30,7 +35,7 @@ final class AuthClientImpl implements AuthClient {
         error: error,
         stackTrace: stackTrace,
       );
-      return null;
+      throw AuthException(message: error.toString());
     }
   }
 
@@ -38,13 +43,18 @@ final class AuthClientImpl implements AuthClient {
   ///
   /// Returns the user UID if successful, or `null` if authentication fails.
   @override
-  Future<String?> login(String email, String password) async {
+  Future<String> login(String email, String password) async {
     try {
       final credential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return credential.user?.uid;
+
+      if (credential.user == null || credential.user?.uid == null) {
+        throw AuthException(message: 'Login failed');
+      }
+
+      return credential.user!.uid;
     } on FirebaseAuthException catch (error, stackTrace) {
       _logger.warning(
         'Login failed',
@@ -56,7 +66,7 @@ final class AuthClientImpl implements AuthClient {
           'message': error.message,
         },
       );
-      return null;
+      throw AuthException(message: error.message ?? 'Login failed');
     } catch (error, stackTrace) {
       _logger.error(
         'Unexpected error during login',
@@ -64,49 +74,17 @@ final class AuthClientImpl implements AuthClient {
         stackTrace: stackTrace,
         data: {'email': email},
       );
-      return null;
-    }
-  }
-
-  /// Sends a password reset email to the given [email].
-  ///
-  /// Returns `true` if the email was successfully sent, `false` otherwise.
-  @override
-  Future<bool> forgotPassword(String email) async {
-    try {
-      await _firebaseAuth.sendPasswordResetEmail(email: email);
-      return true;
-    } on FirebaseAuthException catch (error, stackTrace) {
-      _logger.warning(
-        'Forgot password failed',
-        error: error,
-        stackTrace: stackTrace,
-        data: {
-          'email': email,
-          'code': error.code,
-          'message': error.message,
-        },
-      );
-      return false;
-    } catch (error, stackTrace) {
-      _logger.error(
-        'Unexpected error during forgot password',
-        error: error,
-        stackTrace: stackTrace,
-        data: {'email': email},
-      );
-      return false;
+      throw AuthException(message: error.toString());
     }
   }
 
   /// Logs out the currently authenticated user.
   ///
-  /// Returns `true` if successful, `false` otherwise.
+  /// Throws an exception if unsuccessful.
   @override
-  Future<bool> logout() async {
+  Future<void> logout() async {
     try {
       await _firebaseAuth.signOut();
-      return true;
     } on FirebaseAuthException catch (error, stackTrace) {
       _logger.warning(
         'Logout failed',
@@ -117,14 +95,14 @@ final class AuthClientImpl implements AuthClient {
           'message': error.message,
         },
       );
-      return false;
+      throw AuthException(message: error.message ?? 'Logout failed');
     } catch (error, stackTrace) {
       _logger.error(
         'Unexpected error during logout',
         error: error,
         stackTrace: stackTrace,
       );
-      return false;
+      throw AuthException(message: error.toString());
     }
   }
 
@@ -132,7 +110,7 @@ final class AuthClientImpl implements AuthClient {
   ///
   /// Returns the user UID if successful, or `null` if registration fails.
   @override
-  Future<String?> register(String email, String password, String name) async {
+  Future<String> register(String email, String password, String name) async {
     try {
       final credential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -144,7 +122,11 @@ final class AuthClientImpl implements AuthClient {
         await credential.user!.updateDisplayName(name);
       }
 
-      return credential.user?.uid;
+      if (credential.user == null || credential.user?.uid == null) {
+        throw AuthException(message: 'Registration failed');
+      }
+
+      return credential.user!.uid;
     } on FirebaseAuthException catch (error, stackTrace) {
       _logger.warning(
         'Registration failed',
@@ -157,7 +139,7 @@ final class AuthClientImpl implements AuthClient {
           'message': error.message,
         },
       );
-      return null;
+      throw AuthException(message: error.message ?? 'Registration failed');
     } catch (error, stackTrace) {
       _logger.error(
         'Unexpected error during registration',
@@ -165,22 +147,21 @@ final class AuthClientImpl implements AuthClient {
         stackTrace: stackTrace,
         data: {'email': email, 'name': name},
       );
-      return null;
+      throw AuthException(message: error.toString());
     }
   }
 
   /// Resets the user's password by sending a reset email.
   ///
   /// Firebase does not support direct password reset without an OOB code.
-  /// Returns `true` if the reset email was sent, `false` otherwise.
+  /// Throws an exception if unsuccessful.
   @override
-  Future<bool> resetPassword(String email, String password) async {
+  Future<void> sendResetPassword(String email) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
-      return true;
     } on FirebaseAuthException catch (error, stackTrace) {
       _logger.warning(
-        'Reset password request failed',
+        'Send reset password request failed',
         error: error,
         stackTrace: stackTrace,
         data: {
@@ -189,15 +170,17 @@ final class AuthClientImpl implements AuthClient {
           'message': error.message,
         },
       );
-      return false;
+      throw AuthException(
+        message: error.message ?? 'Send reset password request failed',
+      );
     } catch (error, stackTrace) {
       _logger.error(
-        'Unexpected error during reset password request',
+        'Unexpected error during send reset password request',
         error: error,
         stackTrace: stackTrace,
         data: {'email': email},
       );
-      return false;
+      throw AuthException(message: error.toString());
     }
   }
 }

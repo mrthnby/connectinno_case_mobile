@@ -41,6 +41,9 @@ dependencies:
   firebase_core: ^4.1.0
   firebase_auth: ^6.0.2
 
+  # UI
+  flutter_svg: ^2.2.1
+
 dev_dependencies:
   # Flutter test
   flutter_test:
@@ -66,3 +69,4 @@ flutter:
 
   assets:
     - assets/translations/
+    - assets/icons/

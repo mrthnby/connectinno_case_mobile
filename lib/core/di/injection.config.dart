@@ -18,6 +18,20 @@ import 'package:connectinno_case_mobile/core/clients/logger/logger_service.dart'
     as _i794;
 import 'package:connectinno_case_mobile/core/clients/logger/logger_service_impl.dart'
     as _i84;
+import 'package:connectinno_case_mobile/features/auth/data/datasources/auth_remote_datasource.dart'
+    as _i912;
+import 'package:connectinno_case_mobile/features/auth/data/repositories/auth_repository_impl.dart'
+    as _i664;
+import 'package:connectinno_case_mobile/features/auth/domain/repositories/auth_repository.dart'
+    as _i223;
+import 'package:connectinno_case_mobile/features/auth/domain/usecases/login_usecase.dart'
+    as _i100;
+import 'package:connectinno_case_mobile/features/auth/domain/usecases/register_usecase.dart'
+    as _i350;
+import 'package:connectinno_case_mobile/features/auth/domain/usecases/reset_password_usecase.dart'
+    as _i143;
+import 'package:connectinno_case_mobile/features/auth/presentation/controllers/auth_bloc.dart'
+    as _i203;
 import 'package:connectinno_case_mobile/features/splash/data/datasources/splash_remote_datasource.dart'
     as _i951;
 import 'package:connectinno_case_mobile/features/splash/data/repositories/splash_repository_impl.dart'
@@ -55,14 +69,36 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i951.SplashRemoteDatasource>(
       () => _i951.SplashRemoteDatasourceImpl(gh<_i213.AuthClient>()),
     );
+    gh.lazySingleton<_i912.AuthRemoteDatasource>(
+      () => _i912.AuthRemoteDatasourceImpl(gh<_i213.AuthClient>()),
+    );
     gh.lazySingleton<_i134.SplashRepository>(
       () => _i805.SplashRepositoryImpl(gh<_i951.SplashRemoteDatasource>()),
+    );
+    gh.lazySingleton<_i223.AuthRepository>(
+      () => _i664.AuthRepositoryImpl(gh<_i912.AuthRemoteDatasource>()),
     );
     gh.factory<_i734.GetCurrentUserIDUsecase>(
       () => _i734.GetCurrentUserIDUsecase(gh<_i134.SplashRepository>()),
     );
+    gh.factory<_i100.LoginUsecase>(
+      () => _i100.LoginUsecase(gh<_i223.AuthRepository>()),
+    );
+    gh.factory<_i350.RegisterUsecase>(
+      () => _i350.RegisterUsecase(gh<_i223.AuthRepository>()),
+    );
+    gh.factory<_i143.ResetPasswordUsecase>(
+      () => _i143.ResetPasswordUsecase(gh<_i223.AuthRepository>()),
+    );
     gh.factory<_i1053.SplashBloc>(
       () => _i1053.SplashBloc(gh<_i734.GetCurrentUserIDUsecase>()),
+    );
+    gh.factory<_i203.AuthBloc>(
+      () => _i203.AuthBloc(
+        gh<_i100.LoginUsecase>(),
+        gh<_i350.RegisterUsecase>(),
+        gh<_i143.ResetPasswordUsecase>(),
+      ),
     );
     return this;
   }

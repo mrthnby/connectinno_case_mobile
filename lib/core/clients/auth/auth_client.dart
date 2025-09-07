@@ -14,19 +14,17 @@ abstract class AuthClient {
   /// Logs in a user with the provided [email] and [password].
   ///
   /// Returns the user's unique identifier (uid) upon successful login,
-  /// or `null` if login fails.
-  Future<String?> login(String email, String password);
+  Future<String> login(String email, String password);
 
   /// Logs out the currently authenticated user.
   ///
-  /// Returns `true` if logout was successful, `false` otherwise.
-  Future<bool> logout();
+  /// Returns `true` if logout was successful, throws an exception otherwise.
+  Future<void> logout();
 
   /// Registers a new user with [email], [password], and [name].
   ///
   /// Returns the user's unique identifier (uid) upon successful registration,
-  /// or `null` if registration fails.
-  Future<String?> register(
+  Future<String> register(
     String email,
     String password,
     String name,
@@ -34,11 +32,6 @@ abstract class AuthClient {
 
   /// Sends a password reset email to the given [email].
   ///
-  /// Returns `true` if the email was successfully sent, `false` otherwise.
-  Future<bool> forgotPassword(String email);
-
-  /// Resets the user's password for the given [email] to [password].
-  ///
-  /// Returns `true` if the password reset mail was successfully sent, `false` otherwise.
-  Future<bool> resetPassword(String email, String password);
+  /// Returns `true` if the password reset mail was successfully sent, throws an exception otherwise.
+  Future<void> sendResetPassword(String email);
 }

@@ -1,5 +1,6 @@
 import 'package:connectinno_case_mobile/core/constants/app_constants.dart';
 import 'package:connectinno_case_mobile/core/router/app_router.dart';
+import 'package:connectinno_case_mobile/core/theme/app_theme.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: AppConstants.appName,
+      theme: AppTheme.light,
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,

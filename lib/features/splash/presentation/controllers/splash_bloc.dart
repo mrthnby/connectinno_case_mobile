@@ -12,7 +12,6 @@ import 'package:injectable/injectable.dart';
 /// - Emits:
 ///   - [SplashUserIDFoundState] when a user ID is found.
 ///   - [SplashUserIDNotFoundState] when no user ID exists.
-///   - [SplashErrorState] if an error occurs.
 @injectable
 final class SplashBloc extends Bloc<SplashEvent, SplashState> {
   /// Creates a [SplashBloc] with the required [GetCurrentUserIDUsecase].
@@ -30,8 +29,7 @@ final class SplashBloc extends Bloc<SplashEvent, SplashState> {
   ///
   /// - Calls [getCurrentUserIDUsecase] to fetch the stored user ID.
   /// - Emits:
-  ///   - [SplashErrorState] if the use case fails.
-  ///   - [SplashUserIDNotFoundState] if no user ID is found.
+  ///   - [SplashUserIDNotFoundState] if no user ID is found or the use case fails.
   ///   - [SplashUserIDFoundState] if a user ID is found.
   Future<void> _onInitialize(
     SplashInitializeEvent event,
@@ -40,10 +38,10 @@ final class SplashBloc extends Bloc<SplashEvent, SplashState> {
     final result = await getCurrentUserIDUsecase();
 
     result.fold(
-      // On failure, emit error state with message
-      (failure) => emit(SplashErrorState(message: failure.message)),
+      // On failure, emit user ID not found state
+      (failure) => emit(const SplashUserIDNotFoundState()),
 
-      // On success, check if user ID exists
+      // On success, check if user ID exists and emit the appropriate state
       (uid) {
         if (uid == null) {
           emit(const SplashUserIDNotFoundState());
