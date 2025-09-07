@@ -2,6 +2,8 @@ import 'package:connectinno_case_mobile/core/extensions/context_extensions.dart'
 import 'package:connectinno_case_mobile/core/theme/app_dimens.dart';
 import 'package:connectinno_case_mobile/features/home/domain/entities/note_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:connectinno_case_mobile/gen/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 /// A card widget that displays a single note with title, content preview,
 /// last updated date, and selection state.
@@ -72,14 +74,14 @@ class NoteCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    note.title.isEmpty ? 'Untitled' : note.title,
+                    note.title.isEmpty ? LocaleKeys.untitled.tr() : note.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: context.textStyles.headline.copyWith(fontSize: 18),
                   ),
                   AppDimens.h8,
                   Text(
-                    preview.isEmpty ? 'No content' : preview,
+                    preview.isEmpty ? LocaleKeys.noContent.tr() : preview,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: context.textStyles.bodySmall.copyWith(

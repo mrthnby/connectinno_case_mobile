@@ -8,6 +8,8 @@ import 'package:connectinno_case_mobile/features/home/presentation/controllers/h
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:connectinno_case_mobile/gen/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 /// Page for creating or editing a note.
 ///
@@ -104,7 +106,9 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
 
     final newNote = NoteEntity(
       title: _titleController.text.isEmpty
-          ? 'Note ${now.toIso8601String()}'
+          ? LocaleKeys.noteWithDate.tr(
+              namedArgs: {'date': now.toIso8601String()},
+            )
           : _titleController.text,
       content: content,
       createdAt: now,
@@ -135,7 +139,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                 state.maybeWhen(
                   orElse: () => _titleController.text.isNotEmpty
                       ? _titleController.text
-                      : 'Untitled',
+                      : LocaleKeys.untitled.tr(),
                   loaded: (notes) {
                     final targetUid = _currentNoteUid ?? widget.note?.uid;
                     if (targetUid != null) {
@@ -147,7 +151,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                     }
                     return _titleController.text.isNotEmpty
                         ? _titleController.text
-                        : 'Untitled';
+                        : LocaleKeys.untitled.tr();
                   },
                 ),
               );
@@ -163,7 +167,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                 showDialog<void>(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('Edit Title'),
+                    title: Text(LocaleKeys.editTitle.tr()),
                     content: TextField(
                       controller: _titleController,
                       autofocus: true,
@@ -171,14 +175,14 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(),
-                        child: Text('Cancel'),
+                        child: Text(LocaleKeys.cancel.tr()),
                       ),
                       TextButton(
                         onPressed: () {
                           _saveOrUpdateNote();
                           Navigator.of(context).pop();
                         },
-                        child: Text('Save'),
+                        child: Text(LocaleKeys.save.tr()),
                       ),
                     ],
                   ),

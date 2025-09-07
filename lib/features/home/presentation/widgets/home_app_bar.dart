@@ -5,6 +5,8 @@ import 'package:connectinno_case_mobile/features/home/presentation/controllers/h
 import 'package:connectinno_case_mobile/features/home/presentation/controllers/selection_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:connectinno_case_mobile/gen/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 /// Custom AppBar for the home screen displaying notes.
 ///
@@ -24,18 +26,20 @@ class HomeAppBar extends StatelessWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete notes?'),
+        title: Text(LocaleKeys.deleteNotesQuestion.tr()),
         content: Text(
-          'Are you sure you want to delete ${selectionState.selectedCount} selected note(s)?',
+          LocaleKeys.confirmDeleteSelected.tr(
+            namedArgs: {'count': selectionState.selectedCount.toString()},
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancel'),
+            child: Text(LocaleKeys.cancel.tr()),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Delete'),
+            child: Text(LocaleKeys.delete.tr()),
           ),
         ],
       ),
@@ -68,15 +72,19 @@ class HomeAppBar extends StatelessWidget {
           centerTitle: true,
           title: Text(
             selectionState.isSelectionMode && selectionState.selectedCount > 0
-                ? '${selectionState.selectedCount} selected'
-                : 'Notes',
+                ? LocaleKeys.selectedCount.tr(
+                    namedArgs: {
+                      'count': selectionState.selectedCount.toString(),
+                    },
+                  )
+                : LocaleKeys.notes.tr(),
           ),
           leading: selectionState.isSelectionMode
               ? IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () =>
                       context.read<SelectionCubit>().exitSelectionMode(),
-                  tooltip: 'Cancel',
+                  tooltip: LocaleKeys.cancel.tr(),
                 )
               : null,
           actions: [
@@ -86,14 +94,14 @@ class HomeAppBar extends StatelessWidget {
                 onPressed: selectionState.selectedCount == 0
                     ? null
                     : () => _deleteSelectedNotes(context, selectionState),
-                tooltip: 'Delete',
+                tooltip: LocaleKeys.delete.tr(),
               )
             else
               IconButton(
                 icon: const Icon(Icons.edit),
                 onPressed: () =>
                     context.read<SelectionCubit>().enterSelectionMode(),
-                tooltip: 'Edit',
+                tooltip: LocaleKeys.edit.tr(),
               ),
           ],
         );

@@ -23,5 +23,19 @@
     "passwordMustBeAtLeast6CharactersLong": "Password must be at least 6 characters long",
     "passwordsDoNotMatch": "Passwords do not match",
     "nameFieldCannotBeEmpty": "Name field cannot be empty",
-    "nameCanOnlyContainLettersSpacesHyphensApostrophesAndMustBeAtLeast2CharactersLong": "Name can only contain letters, spaces, hyphens (-), and apostrophes (') and must be at least 2 characters long"
+    "nameCanOnlyContainLettersSpacesHyphensApostrophesAndMustBeAtLeast2CharactersLong": "Name can only contain letters, spaces, hyphens (-), and apostrophes (') and must be at least 2 characters long",
+    "notes": "Notes",
+    "untitled": "Untitled",
+    "selectedCount": "{count} selected",
+    "deleteNotesQuestion": "Delete notes?",
+    "confirmDeleteSelected": "Are you sure you want to delete {count} selected note(s)?",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "editTitle": "Edit Title",
+    "save": "Save",
+    "noNotesYet": "No notes yet",
+    "tapToAddFirstNote": "Tap + to add your first note",
+    "noContent": "No content",
+    "noteWithDate": "Note {date}"
 }
